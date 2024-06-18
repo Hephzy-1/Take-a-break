@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-async function RegisterEmail (email) {
+async function registerEmail (email) {
   const mailOptions = {
     from: process.env.Email,
     to: email,
