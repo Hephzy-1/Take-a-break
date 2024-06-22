@@ -26,6 +26,24 @@ async function registerEmail (email) {
   await info.response
 }
 
+async function resetLinkMail (email, token) {
+  const mailOptions = {
+    from: process.env.Email,
+    to: email,
+    subject: 'Reset Link',
+    text: `Here is your reset link
+    
+    http://localhost:${process.env.PORT}/auth/reset/${token}
+    
+    This link expires in ${process.env.EXPIRY}`
+  }
+
+  const info = await transporter.sendMail(mailOptions);
+
+  return info.response
+}
+
 module.exports = {
-  registerEmail
+  registerEmail,
+  resetLinkMail
 }
