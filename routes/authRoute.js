@@ -4,8 +4,9 @@ const { body } = require('express-validator')
 const { register, login, resetLink, reset } = require('../controllers/authCon');
 
 // Register Route
-route.post('/register', [
-  body('fullname'),
+route.post('/sign-up', [
+  body('firstName').isAlpha().withMessage('Please enter a valid first name'),
+  body('lastName').isAlpha().withMessage('Please enter a valid last name'),
   body('email').isEmail().withMessage('Please enter a valid email address'),
   body('password')
     .isLength({ min: 8 })

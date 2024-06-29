@@ -1,12 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const userRoute = require('./routes/authRoute')
+const cookieParser = require('cookie-parser');
+const authenticate = require('./middleware/auth');
+const userRoute = require('./routes/authRoute');
+const contactRoute = require('./routes/contactRoute');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json())
+app.use(express.json());
+app.use(cookieParser());
 
 // Connection options
 const options = {
@@ -20,6 +24,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/auth', userRoute);
+app.use(authenticate);
+app.use('/contact', contactRoute);
 
 const client = mongoose.connect(process.env.DB_URI, options)
 client.then(

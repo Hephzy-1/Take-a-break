@@ -11,7 +11,7 @@ async function register (req, res) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { fullname, email, password, confirmPassword } = req.body;
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
 
     const checkUser = await Users.findOne({ email });
 
@@ -61,6 +61,10 @@ async function login (req, res) {
     if (!compare) {
       res.status(400).json({ message: 'Password is incorrect'})
     } else {
+
+      const token = await generateToken(email)
+
+      res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
       res.status(200).json({ message: 'Welcome'})
     }
 
@@ -89,7 +93,7 @@ async function resetLink (req, res) {
 
   const resetMail = await resetLinkMail(email, token)
 
-  res.status(200).json({ message: 'Reset link has been sent', resetMail})
+  res.status(200).json({ message: 'Reset link has been sent', token})
  } catch (err) {
   res.status(500).json({ message: 'Internal Server Error', error: err.message })
  } 

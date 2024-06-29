@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 async function registerEmail (email) {
   const mailOptions = {
-    from: process.env.Email,
+    from: 'Take A Break',
     to: email,
     subject: 'You have been registered',
     text: `Thank you for signing up to Take A Break`
@@ -28,12 +28,14 @@ async function registerEmail (email) {
 
 async function resetLinkMail (email, token) {
   const mailOptions = {
-    from: process.env.Email,
+    from: 'Take A Break',
     to: email,
     subject: 'Reset Link',
     text: `Here is your reset link
     
-    http://localhost:${process.env.PORT}/auth/reset/${token}
+    <button>
+      <a href=http://localhost:${process.env.PORT}/auth/reset/${token}></a>
+    </button>
     
     This link expires in ${process.env.EXPIRY}`
   }
@@ -43,7 +45,20 @@ async function resetLinkMail (email, token) {
   return info.response
 }
 
+async function contactUs (email, subject, message) {
+  const mailOptions = {
+    from: email,
+    to: process.env.Email,
+    subject: `Contact Us TAB: ${subject}`,
+    text: `Email: ${email} \n Message: ${message}`
+  }
+
+  const info = await transporter.sendMail(mailOptions);
+  return info.response
+}
+
 module.exports = {
   registerEmail,
-  resetLinkMail
+  resetLinkMail,
+  contactUs
 }
