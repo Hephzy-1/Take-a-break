@@ -31,11 +31,7 @@ async function resetLinkMail (email, token) {
     from: 'Take A Break',
     to: email,
     subject: 'Reset Link',
-    text: `Here is your reset link
-    
-    <button>
-      <a href=http://localhost:${process.env.PORT}/auth/reset/${token}></a>
-    </button>
+    text: `Here is your reset link \nhttp://localhost:${process.env.PORT}/auth/reset/${token}
     
     This link expires in ${process.env.EXPIRY}`
   }
@@ -45,12 +41,12 @@ async function resetLinkMail (email, token) {
   return info.response
 }
 
-async function contactUs (email, subject, message) {
+async function contactUs (email, subject, fullName, message) {
   const mailOptions = {
     from: email,
     to: process.env.Email,
     subject: `Contact Us TAB: ${subject}`,
-    text: `Email: ${email} \n Message: ${message}`
+    text: `Name: ${fullName} \nEmail: ${email} \nMessage: ${message}`
   }
 
   const info = await transporter.sendMail(mailOptions);
