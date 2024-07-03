@@ -36,8 +36,8 @@ app.post('/send-notification', (req, res) => {
 })
 
 app.use('/auth', userRoute);
-app.use(authenticate);
 app.use('/contact', contactRoute);
+app.use(authenticate);
 app.use(errorHandler)
 
 const client = mongoose.connect(process.env.DB_URI, options)
