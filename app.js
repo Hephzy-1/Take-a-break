@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const Push = require('push.js');
 const authenticate = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(cors());
 
 // Connection options
 const options = {
