@@ -2,7 +2,7 @@ const { contactUs } = require('../utils/email');
 
 async function contact (req, res) {
   try {
-    const { fullName, email, subject, message } = req.body;
+    const { email, fullName, subject, message } = req.body;
 
     const sent = await contactUs(email, subject, fullName, message);
     console.log(sent);
