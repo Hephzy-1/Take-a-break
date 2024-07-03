@@ -41,12 +41,12 @@ async function resetLinkMail (email, token) {
   return info.response
 }
 
-async function contactUs (email, subject, fullName, message) {
+async function contactUs (email, subject, fullname, message) {
   const mailOptions = {
     from: email,
     to: process.env.Email,
     subject: `Contact Us TAB: ${subject}`,
-    text: `Name: ${fullName} \nEmail: ${email} \nMessage: ${message}`
+    text: `Name: ${fullname} \nEmail: ${email} \nMessage: ${message}`
   }
 
   const info = await transporter.sendMail(mailOptions);

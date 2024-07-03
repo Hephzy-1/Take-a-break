@@ -22,11 +22,9 @@ async function register (req, res) {
         res.status(400).json({ message: 'Passwords should be the same.'})
       }
 
-      const hashed = await hashPassword(password);
-      console.log(hashed);
+      const hashed = await hashPassword(password); 
 
       const newUser = new Users({ firstName, lastName, email, password: hashed })
-      console.log(newUser);
 
       const response = await registerEmail(email);
 
@@ -49,14 +47,13 @@ async function login (req, res) {
     const { email, password } = req.body;
 
     const checkUser = await Users.findOne({ email });
-    console.log(checkUser)
 
     if(!checkUser) {
       res.status(400).json({ message: 'User not found. Please register first.' })
     }
 
     const compare = await comparePassword(password, checkUser.password)
-    console.log(compare)
+
 
     if (!compare) {
       res.status(400).json({ message: 'Password is incorrect'})
@@ -89,9 +86,9 @@ async function resetLink (req, res) {
   }
 
   const token = await generateToken(email)
-  console.log(token)
 
   const resetMail = await resetLinkMail(email, token)
+  console.log(resetMail);
 
   res.status(200).json({ message: 'Reset link has been sent', token})
  } catch (err) {
@@ -106,7 +103,6 @@ async function reset (req, res) {
       res.status(400).json({ errors: errors.array() })
     }
     const decoded = await verifyToken(req.params.token);
-    console.log(decoded);
 
     if(!decoded) {
       res.status(401).json({ message: 'Reset link is invalid'})
