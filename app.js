@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
+const Push = require('push.js');
 const authenticate = require('./middleware/auth');
+const errorHandler = require('./middleware/errorHandler');
 const userRoute = require('./routes/authRoute');
 const contactRoute = require('./routes/contactRoute');
 require('dotenv').config();
@@ -21,11 +23,22 @@ const options = {
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to the Take a Break Website'})
+});
+
+app.post('/send-notification', (req, res) => {
+  const delay = 3000; // 3 seconds
+  const notification = Push.create('Time to take a break');
+
+  setTimeout(() => {
+    console.log(`Notification sent: ${delay}`);
+    res.send(`Notification sent: ${notification}`)
+  }, delay)
 })
 
 app.use('/auth', userRoute);
 app.use(authenticate);
 app.use('/contact', contactRoute);
+app.use(errorHandler)
 
 const client = mongoose.connect(process.env.DB_URI, options)
 client.then(

@@ -5,6 +5,7 @@ async function contact (req, res) {
     const { email, subject, message } = req.body;
 
     const sent = await contactUs(email, subject, message);
+    console.log(sent);
 
     if (!sent) {
       throw Error('Email not sent')

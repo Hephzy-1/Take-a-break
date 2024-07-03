@@ -25,7 +25,7 @@ async function register (req, res) {
       const hashed = await hashPassword(password);
       console.log(hashed);
 
-      const newUser = new Users({ fullname, email, password: hashed })
+      const newUser = new Users({ firstName, lastName, email, password: hashed })
       console.log(newUser);
 
       const response = await registerEmail(email);
