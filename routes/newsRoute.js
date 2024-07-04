@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { newLetter } = require('../controllers/listCon');
 
 // newsletter route
-router.post('/newletter', [
+router.post('/newsletter', [
   check('email', 'Please include a valid email').isEmail(),
 ], newLetter);
 
