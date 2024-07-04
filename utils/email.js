@@ -66,7 +66,19 @@ async function newsletterMail (email) {
     from: 'Take A Break',
     to: email,
     subject: 'Newletter',
-    text: `Thank you for subscribing to Take A Break Newsletter`
+    text: `Thank you for subscribing to Take A Break Newsletter. Stay tuned for updates.`
+  }
+
+  const info = await transporter.sendMail(mailOptions);
+  return info.response
+}
+
+async function feedback (message) {
+  const mailOptions = {
+    from: 'user',
+    to: process.env.Email,
+    subject: `TAB Feedback`,
+    text: `Message: ${message}`
   }
 
   const info = await transporter.sendMail(mailOptions);
@@ -77,5 +89,6 @@ module.exports = {
   registerEmail,
   resetLinkMail,
   contactUs,
-  newsletterMail
+  newsletterMail,
+  feedback
 }
