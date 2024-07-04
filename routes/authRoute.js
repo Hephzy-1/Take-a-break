@@ -27,12 +27,12 @@ route.post('/login', [
 ], login);
 
 // Reset link Route
-route.post('/reset-password', [
+route.post('/forgot-password', [
   body('email').isEmail().withMessage('Please enter a valid email address')
 ], resetLink)
 
 // Reset Password Route
-route.put('/reset/:token', [
+route.put('/reset-password/:token', [
   body('password')
     .isLength({ min: 8 })
     .withMessage('Password must be at least 8 characters long')
