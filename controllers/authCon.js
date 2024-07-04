@@ -34,6 +34,8 @@ async function register (req, res) {
 
       const token = await generateToken(email)
       const response = await registerEmail(email);
+
+      console.log('Signed Up');
       res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
       res.status(201).json({ message: 'SignUp Successful', response})
     }
@@ -53,7 +55,6 @@ async function login (req, res) {
     const { email, password } = req.body;
 
     const checkUser = await Users.findOne({ email });
-    console.log(checkUser);
 
     if(!checkUser) {
       res.status(400).json({ message: 'User not found. Please register first.' })
@@ -67,6 +68,7 @@ async function login (req, res) {
 
       const token = await generateToken(email)
 
+      console.log('Logged In')
       res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
       res.status(200).json({ user: checkUser.firstName})
     }
@@ -129,6 +131,7 @@ async function reset (req, res) {
     const hashed = await hashPassword(password);
     await Users.updateOne({ email: decoded.email }, { $set: { password: hashed } })
 
+    console.log('Password updated');
     res.status(200).json({ message: 'Password has been updated' })
 
   } catch (err) {
