@@ -34,12 +34,12 @@ async function resetLinkMail (email, token) {
     html: `Here is your reset link 
     <br> <br>
     <button>
-      <a href="https://take-a-break-anny.onrender.com:${process.env.PORT}/auth/reset/${token}">Reset Password</a>
+      <a href="https://take-a-break-anny.onrender.com/auth/reset/${token}">Reset Password</a>
     </button>
     
     <br><br> or click or paste this in your browser 
 
-    <br><br> https://take-a-break-anny.onrender.com:${process.env.PORT}/auth/reset/${token}
+    <br><br> https://take-a-break-anny.onrender.com/auth/reset/${token}
 
     <br><br> This link expires in ${process.env.EXPIRY}`
   }
