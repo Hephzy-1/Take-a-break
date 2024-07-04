@@ -18,7 +18,7 @@ async function registerEmail (email) {
     from: 'Take A Break',
     to: email,
     subject: 'You have been registered',
-    text: `Thank you for signing up to Take A Break`
+    html: `<h2>Thank you for signing up to Take A Break</h2>`
   }
 
   const info = transporter.sendMail(mailOptions)
@@ -31,9 +31,17 @@ async function resetLinkMail (email, token) {
     from: 'Take A Break',
     to: email,
     subject: 'Reset Link',
-    text: `Here is your reset link \nhttp://localhost:${process.env.PORT}/auth/reset/${token}
+    html: `Here is your reset link 
     
-    This link expires in ${process.env.EXPIRY}`
+    \n<button>
+      <a href="http://localhost:${process.env.PORT}/auth/reset/${token}">Reset Password</a>
+    </button>
+    
+    \nor click or paste this in your browser 
+
+    \nhttp://localhost:${process.env.PORT}/auth/reset/${token}
+
+    \nThis link expires in ${process.env.EXPIRY}`
   }
 
   const info = await transporter.sendMail(mailOptions);
@@ -53,8 +61,21 @@ async function contactUs (email, subject, fullname, message) {
   return info.response
 }
 
+async function newsletterMail (email) {
+  const mailOptions = {
+    from: 'Take A Break',
+    to: email,
+    subject: 'Newletter',
+    text: `Thank you for subscribing to Take A Break Newsletter`
+  }
+
+  const info = await transporter.sendMail(mailOptions);
+  return info.response
+}
+
 module.exports = {
   registerEmail,
   resetLinkMail,
-  contactUs
+  contactUs,
+  newsletterMail
 }

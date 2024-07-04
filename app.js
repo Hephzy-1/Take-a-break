@@ -7,6 +7,8 @@ const authenticate = require('./middleware/auth');
 const errorHandler = require('./middleware/errorHandler');
 const userRoute = require('./routes/authRoute');
 const contactRoute = require('./routes/contactRoute');
+const newsLetterRoute = require('./routes/newsRoute');
+
 require('dotenv').config();
 
 const app = express();
@@ -39,6 +41,7 @@ app.post('/send-notification', (req, res) => {
 
 app.use('/auth', userRoute);
 app.use('/contact', contactRoute);
+app.use('/news', newsLetterRoute);
 app.use(authenticate);
 app.use(errorHandler)
 

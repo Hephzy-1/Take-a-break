@@ -1,7 +1,13 @@
 const { contactUs } = require('../utils/email');
+const { validationResult } = require('express-validation');
 
 async function contact (req, res) {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     const { email, fullname, subject, message } = req.body;
 
     const sent = await contactUs(email, subject, fullname, message);

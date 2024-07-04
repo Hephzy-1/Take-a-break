@@ -16,7 +16,7 @@ async function register (req, res) {
     const checkUser = await Users.findOne({ email });
 
     if (checkUser) {
-      res.status(400).json({ message: 'User already exists. Please use another email' })
+      res.status(400).json({ message: 'User already exists. Please use another email'})
     } else {
       if (confirmPassword !== password) {
         res.status(400).json({ message: 'Passwords should be the same.'})
@@ -53,13 +53,13 @@ async function login (req, res) {
     const { email, password } = req.body;
 
     const checkUser = await Users.findOne({ email });
+    console.log(checkUser);
 
     if(!checkUser) {
       res.status(400).json({ message: 'User not found. Please register first.' })
     }
 
     const compare = await comparePassword(password, checkUser.password)
-
 
     if (!compare) {
       res.status(400).json({ message: 'Password is incorrect'})
@@ -68,7 +68,7 @@ async function login (req, res) {
       const token = await generateToken(email)
 
       res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
-      res.status(200).json({ message: 'Welcome'})
+      res.status(200).json({ message: 'Welcome', user: checkUser.firstName})
     }
 
   } catch (err) {
