@@ -28,7 +28,13 @@ async function register (req, res) {
 
       const response = await registerEmail(email);
 
-      await newUser.save()
+      const saved = await newUser.save();
+
+      if (!saved) {
+        throw Error('Error occured while saving')
+      }
+
+      res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
       res.status(201).json({ message: 'SignUp Successful', response})
     }
 
