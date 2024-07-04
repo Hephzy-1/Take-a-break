@@ -16,10 +16,10 @@ async function register (req, res) {
     const checkUser = await Users.findOne({ email });
 
     if (checkUser) {
-      res.status(400).json({ message: 'User already exists. Please use another email'})
+      res.status(400).json({ message: 'User already exists. Please use another email' })
     } else {
       if (confirmPassword !== password) {
-        res.status(400).json({ message: 'Passwords should be the same.'})
+        res.status(400).json({ message: 'Passwords should be the same.' })
       }
 
       const hashed = await hashPassword(password); 
@@ -36,8 +36,8 @@ async function register (req, res) {
       const response = await registerEmail(email);
 
       console.log('Signed Up');
-      res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
-      res.status(201).json({ message: 'SignUp Successful', response})
+      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
+      res.status(201).json({ message: 'SignUp Successful', response })
     }
 
   } catch (err) {
@@ -54,7 +54,7 @@ async function login (req, res) {
 
     const { firstName, email, password } = req.body;
 
-    const checkUser = await Users.findOne({ firstName, email });
+    const checkUser = await Users.findOne({ firstName: firstName, email });
 
     if(!checkUser) {
       res.status(400).json({ message: 'User not found. Please register first.' })
@@ -69,8 +69,8 @@ async function login (req, res) {
       const token = await generateToken(email)
 
       console.log('Logged In')
-      res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
-      res.status(200).json({ user: checkUser.firstName})
+      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
+      res.status(200).json({ message: 'Welcome to TAB', user: checkUser.firstName})
     }
 
   } catch (err) {
