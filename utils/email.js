@@ -65,8 +65,8 @@ async function newsletterMail (email) {
   const mailOptions = {
     from: 'Take A Break',
     to: email,
-    subject: 'Newletter',
-    text: `Thank you for subscribing to Take A Break Newsletter. Stay tuned for updates.`
+    subject: 'Newsletter',
+    text: `Thank you for subscribing to Take a Break Newsletter. Stay tuned for updates.`
   }
 
   const info = await transporter.sendMail(mailOptions);
