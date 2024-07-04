@@ -21,7 +21,6 @@ app.use(cors());
 // Connection options
 const options = {
   useNewUrlParser: true,
-  useUnifiedTopology: true,
   serverSelectionTimeoutMS: 50000, // Increase timeout to 50 seconds
 };
 
@@ -43,7 +42,7 @@ app.use('/auth', userRoute);
 app.use('/contact', contactRoute);
 app.use('/news', newsLetterRoute);
 app.use(authenticate);
-app.use(errorHandler)
+app.use(errorHandler);
 
 const client = mongoose.connect(process.env.DB_URI, options)
 client.then(

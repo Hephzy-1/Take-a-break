@@ -68,7 +68,7 @@ async function login (req, res) {
       const token = await generateToken(email)
 
       res.cookie('token', token, {httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
-      res.status(200).json({ message: 'Welcome', user: checkUser.firstName})
+      res.status(200).json({ user: checkUser.firstName})
     }
 
   } catch (err) {
