@@ -36,7 +36,7 @@ async function register (req, res) {
       const response = await registerEmail(email);
 
       console.log('Signed Up');
-      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
+      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 1 * 60 * 60 * 1000 })
       res.status(201).json({ message: 'SignUp Successful', response })
     }
 
