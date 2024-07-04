@@ -52,9 +52,9 @@ async function login (req, res) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email, password } = req.body;
+    const { firstName, email, password } = req.body;
 
-    const checkUser = await Users.findOne({ email });
+    const checkUser = await Users.findOne({ firstName, email });
 
     if(!checkUser) {
       res.status(400).json({ message: 'User not found. Please register first.' })
