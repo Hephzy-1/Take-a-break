@@ -1,5 +1,5 @@
 const { contactUs } = require('../utils/email');
-const { validationResult } = require('express-validation');
+const { validationResult } = require('express-validator');
 
 async function contact (req, res) {
   try {
