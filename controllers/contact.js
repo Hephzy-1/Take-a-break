@@ -1,4 +1,4 @@
-const { contactUs, feedback } = require('../utils/email');
+const { contactUs, feedbackMail } = require('../utils/email');
 const { validationResult } = require('express-validator');
 
 async function contact (req, res) {
@@ -52,9 +52,9 @@ async function feedbackMessage(req, res) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { feedback: message } = req.body; // Matching the key with the frontend
+    const { feedback } = req.body; // Matching the key with the frontend
 
-    const sent = await feedback(message);
+    const sent = await feedbackMail(feedback);
     console.log(sent);
 
     if (!sent) {

@@ -85,7 +85,7 @@ async function newsletterMail (email) {
 //   return info.response
 // }
 
-async function feedback(message) {
+async function feedbackMail(message) {
   const mailOptions = {
     from: 'user',
     to: process.env.Email,
@@ -102,5 +102,5 @@ module.exports = {
   resetLinkMail,
   contactUs,
   newsletterMail,
-  feedback
+  feedbackMail
 }
