@@ -26,7 +26,7 @@ const newLetter = async (req, res) => {
   const added = newsletterMail(email);
   res.status(200).json({ message: 'You have successfully subscibed to our newletter', added });
   } catch (err) {
-    if (err.message === 'subscribed') {
+    if (err.message == 'subscribed') {
       res.status(400).json({ message: 'This user has already subscribed to our nesletter' })
     } else {
       res.status(500).json({ message: 'Internal Server Error', error: err.message })
