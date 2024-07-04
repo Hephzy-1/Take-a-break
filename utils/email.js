@@ -32,16 +32,16 @@ async function resetLinkMail (email, token) {
     to: email,
     subject: 'Reset Link',
     html: `Here is your reset link 
-    
-    \n<button>
+    <br>
+    <button>
       <a href="http://localhost:${process.env.PORT}/auth/reset/${token}">Reset Password</a>
     </button>
     
-    \nor click or paste this in your browser 
+    <br> or click or paste this in your browser 
 
-    \nhttp://localhost:${process.env.PORT}/auth/reset/${token}
+    <br> http://localhost:${process.env.PORT}/auth/reset/${token}
 
-    \nThis link expires in ${process.env.EXPIRY}`
+    <br>This link expires in ${process.env.EXPIRY}`
   }
 
   const info = await transporter.sendMail(mailOptions);
