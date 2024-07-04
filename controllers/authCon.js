@@ -57,7 +57,7 @@ async function login (req, res) {
     const checkUser = await Users.findOne({ firstName, email });
 
     if(!checkUser) {
-      res.status(400).json({ message: 'User not found. Please register first.' })
+      return res.status(400).json({ message: 'User not found. Please register first.' })
     }
 
     const compare = await comparePassword(password, checkUser.password)
@@ -69,12 +69,12 @@ async function login (req, res) {
       const token = await generateToken(email)
 
       console.log('Logged In')
-      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'development', maxAge: 1 * 60 * 60 * 1000 })
-      res.status(200).json({ message: 'Welcome to TAB', user: checkUser.firstName})
+      res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 1 * 60 * 60 * 1000 })
+      return res.status(200).json({ message: 'Welcome to TAB', user: checkUser.firstName})
     }
 
   } catch (err) {
-    res.status(500).json({ message: 'Internal Server Error', error: err.message })
+    return res.status(500).json({ message: 'Internal Server Error', error: err.message })
   }
 }
 
