@@ -54,8 +54,7 @@ async function login (req, res) {
 
     const { firstName, email, password } = req.body;
 
-    const checkUser = await Users.findOne({ firstName: firstName, email });
-    console.log(checkUser);
+    const checkUser = await Users.findOne({ firstName, email });
 
     if(!checkUser) {
       res.status(400).json({ message: 'User not found. Please register first.' })
