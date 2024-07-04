@@ -23,25 +23,47 @@ async function contact (req, res) {
   }
 }
 
-async function feedbackMessage (req, res) {
+// async function feedbackMessage (req, res) {
+//   try {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+
+//     const { message } = req.body;
+
+//     const sent = await feedback(message);
+//     console.log(sent);
+
+//     if (!sent) {
+//       throw Error('Email not sent')
+//     }
+
+//     res.status(200).json({ message: 'Your message has been sent'})
+//   } catch (err) {
+//     res.status(500).json({ message: 'Internal Server Error', error: err.message })
+//   }
+// }
+
+async function feedbackMessage(req, res) {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { message } = req.body;
+    const { feedback: message } = req.body; // Matching the key with the frontend
 
     const sent = await feedback(message);
     console.log(sent);
 
     if (!sent) {
-      throw Error('Email not sent')
+      throw new Error('Email not sent');
     }
 
-    res.status(200).json({ message: 'Your message has been sent'})
+    res.status(200).json({ message: 'Your message has been sent' });
   } catch (err) {
-    res.status(500).json({ message: 'Internal Server Error', error: err.message })
+    res.status(500).json({ message: 'Internal Server Error', error: err.message });
   }
 }
 

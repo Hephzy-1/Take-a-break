@@ -73,16 +73,28 @@ async function newsletterMail (email) {
   return info.response
 }
 
-async function feedback (message) {
+// async function feedback (message) {
+//   const mailOptions = {
+//     from: 'user',
+//     to: process.env.Email,
+//     subject: `TAB Feedback`,
+//     text: `Message: ${message}`
+//   }
+
+//   const info = await transporter.sendMail(mailOptions);
+//   return info.response
+// }
+
+async function feedback(message) {
   const mailOptions = {
     from: 'user',
     to: process.env.Email,
-    subject: `TAB Feedback`,
-    text: `Message: ${message}`
-  }
+    subject: 'TAB Feedback', // Corrected syntax
+    text: Message: ${message} // Corrected syntax
+  };
 
   const info = await transporter.sendMail(mailOptions);
-  return info.response
+  return info.response;
 }
 
 module.exports = {
