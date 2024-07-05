@@ -13,12 +13,30 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-async function registerEmail (email) {
+async function registerEmail (firstName, email) {
   const mailOptions = {
     from: 'Take A Break',
     to: email,
-    subject: 'You have been registered',
-    html: `<h2>Thank you for signing up to Take A Break</h2>`
+    subject: 'Welcome to Take a Break!',
+    html: `Dear ${firstName}, <br><br>
+
+    Welcome to Take a Break! We’re thrilled to have you on board. <br><br>
+
+    Life can be hectic, and it’s easy to get overwhelmed. That’s why we created Take a Break—a digital buddy dedicated to helping you find moments of relaxation and calm amidst the chaos. <br><br>
+
+    With our reminders and tips, you’ll be able to take a breather and recharge, no matter how busy your day gets. Here’s what you can expect: <br>
+    - Timely reminders to pause and relax <br>
+    - Personalized relaxation tips and activities <br>
+    - A supportive community focused on well-being <br>
+    - Regular updates with new content and features <br><br>
+
+    To get started, log in to your account and explore all the features we have to offer. If you have any questions, feel free to reach out to our support team ${process.env.Email} <br><br>
+
+    Thank you for choosing Take A Break. We are excited to help you create a balanced and relaxed lifestyle! <br><br>
+
+    Best regards,
+    <br>
+    Take a Break Team`
   }
 
   const info = transporter.sendMail(mailOptions)
@@ -26,28 +44,47 @@ async function registerEmail (email) {
   await info.response
 }
 
-async function resetLinkMail (email, token) {
+const resetLinkMail = async (req, firstName, email, token) => {
+  const getBaseURL = (req) => {
+    return `${req.protocol}://${req.get('host')}`;
+  };
+
+  const baseURL = getBaseURL(req);
+  const resetLink = `${baseURL}/auth/reset/${token}`;
+
   const mailOptions = {
     from: 'Take A Break',
     to: email,
-    subject: 'Reset Link',
-    html: `Here is your reset link 
-    <br> <br>
-    <button>
-      <a href="https://take-a-break-anny.onrender.com/auth/reset/${token}">Reset Password</a>
-    </button>
-    
-    <br><br> or click or paste this in your browser 
+    subject: 'Password Reset Request for Your Take a Break Account',
+    html: `Subject: 
 
-    <br><br> https://take-a-break-anny.onrender.com/auth/reset/${token}
+    Dear [User's Name],
 
-    <br><br> This link expires in ${process.env.EXPIRY}`
-  }
+    We received a request to reset the password for your Take a Break account. Don’t worry, we’ve got you covered! 
+
+    To reset your password, please click the link below:
+
+    [Reset Password Link]
+
+    This link will expire in 24 hours for your security. If you need a new link, simply request another password reset from our website.
+
+    If you did not request a password reset, please ignore this email. Your account remains secure, and no changes have been made.
+
+    For any further assistance, feel free to contact our support team at [support email].
+
+    Stay relaxed and take care!
+
+    Best regards,
+
+    The Take a Break Team
+
+    [Website URL]`
+  };
 
   const info = await transporter.sendMail(mailOptions);
 
-  return info.response
-}
+  return info.response;
+};
 
 async function contactUs (email, subject, fullname, message) {
   const mailOptions = {

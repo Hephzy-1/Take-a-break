@@ -33,7 +33,7 @@ async function register (req, res) {
       }
 
       const token = await generateToken(email)
-      const response = await registerEmail(email);
+      const response = await registerEmail(firstName, email);
 
       console.log('Signed Up');
       res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 1 * 60 * 60 * 1000 })
@@ -95,7 +95,7 @@ async function resetLink (req, res) {
 
   const token = await generateToken(email)
 
-  const resetMail = await resetLinkMail(email, token)
+  const resetMail = await resetLinkMail(req, email, token)
   console.log(resetMail);
 
   res.status(200).json({ message: 'Reset link has been sent', token})
