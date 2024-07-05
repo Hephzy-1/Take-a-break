@@ -18,9 +18,13 @@ async function registerEmail (firstName, email) {
     from: 'Take A Break',
     to: email,
     subject: 'Welcome to Take a Break!',
-    html: `Dear ${firstName}, <br><br>
+    html: `
+    <style>
+      font-family: Poppins;
+    </style>
+    Dear ${firstName}, <br><br>
 
-    Welcome to Take a Break! We’re thrilled to have you on board. <br><br>
+    <h1>Welcome to Take a Break! We’re thrilled to have you on board.</h1> <br><br>
 
     Life can be hectic, and it’s easy to get overwhelmed. That’s why we created Take a Break—a digital buddy dedicated to helping you find moments of relaxation and calm amidst the chaos. <br><br>
 
@@ -56,7 +60,8 @@ const resetLinkMail = async (req, firstName, email, token) => {
     from: 'Take A Break',
     to: email,
     subject: 'Password Reset Request for Your Take a Break Account',
-    html: `Dear ${firstName}, <br><br>
+    html: `
+    <h1>Dear ${firstName},</h1> <br><br>
 
     We received a request to reset the password for your Take a Break account. Don’t worry, we’ve got you covered! <br>
 
@@ -65,6 +70,9 @@ const resetLinkMail = async (req, firstName, email, token) => {
     <button>
       <a href="${resetLink}" style="text-decoration: none">Reset Password</a>
     </button> <br><br>
+
+    or you can copy and paste this link in your browser<br> 
+    ${resetLink} <br><br>
 
     This link will expire in ${process.env.EXPIRY} for your security. If you need a new link, simply request another password reset from our website. <br><br>
 
