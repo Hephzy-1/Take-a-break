@@ -50,7 +50,7 @@ async function registerEmail (firstName, email) {
 
 const resetLinkMail = async (firstName, email, token) => {
 
-  const baseURL = process.env.FROTEND;
+  const baseURL = process.env.FRONTEND;
   const resetLink = `${baseURL}/auth/reset/${token}`;
 
   const mailOptions = {
