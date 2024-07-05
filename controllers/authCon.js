@@ -16,10 +16,10 @@ async function register (req, res) {
     const checkUser = await Users.findOne({ email });
 
     if (checkUser) {
-      res.status(400).json({ message: 'User already exists. Please use another email' })
+      return res.status(400).json({ message: 'User already exists. Please use another email' })
     } else {
       if (confirmPassword !== password) {
-        res.status(400).json({ message: 'Passwords should be the same.' })
+        return res.status(400).json({ message: 'Passwords should be the same.' })
       }
 
       const hashed = await hashPassword(password); 
@@ -37,11 +37,11 @@ async function register (req, res) {
 
       console.log('Signed Up');
       res.cookie('token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'production', maxAge: 1 * 60 * 60 * 1000 })
-      res.status(201).json({ message: 'SignUp Successful', response })
+      return res.status(201).json({ message: 'SignUp Successful', response })
     }
 
   } catch (err) {
-    res.status(500).json({ message: 'Internal Server Error', error: err.message})
+    return res.status(500).json({ message: 'Internal Server Error', error: err.message})
   }
 }
 
@@ -63,7 +63,7 @@ async function login (req, res) {
     const compare = await comparePassword(password, checkUser.password)
 
     if (!compare) {
-      res.status(400).json({ message: 'Password is incorrect'})
+      return res.status(400).json({ message: 'Password is incorrect'})
     } else {
 
       const token = await generateToken(email)
