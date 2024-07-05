@@ -95,7 +95,7 @@ async function resetLink (req, res) {
 
   const token = await generateToken(email)
 
-  const resetMail = await resetLinkMail(req, email, token)
+  const resetMail = await resetLinkMail(req, checkUser.firstName, email, token)
   console.log(resetMail);
 
   res.status(200).json({ message: 'Reset link has been sent', token})

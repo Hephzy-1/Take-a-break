@@ -56,29 +56,29 @@ const resetLinkMail = async (req, firstName, email, token) => {
     from: 'Take A Break',
     to: email,
     subject: 'Password Reset Request for Your Take a Break Account',
-    html: `Subject: 
+    html: `Dear ${firstName}, <br><br>
 
-    Dear [User's Name],
+    We received a request to reset the password for your Take a Break account. Don’t worry, we’ve got you covered! <br>
 
-    We received a request to reset the password for your Take a Break account. Don’t worry, we’ve got you covered! 
+    To reset your password, please click the link below: <br><br>
 
-    To reset your password, please click the link below:
+    <button>
+      <a href="${resetLink}" style="text-decoration: none">Reset Password</a>
+    </button> <br><br>
 
-    [Reset Password Link]
+    This link will expire in ${process.env.EXPIRY} for your security. If you need a new link, simply request another password reset from our website. <br><br>
 
-    This link will expire in 24 hours for your security. If you need a new link, simply request another password reset from our website.
+    If you did not request a password reset, please ignore this email. Your account remains secure, and no changes have been made.<br>
 
-    If you did not request a password reset, please ignore this email. Your account remains secure, and no changes have been made.
+    For any further assistance, feel free to contact our support team at ${process.env.Email}.<br>
 
-    For any further assistance, feel free to contact our support team at [support email].
+    Stay relaxed and take care! <br><br>
 
-    Stay relaxed and take care!
+    Best regards, <br>
 
-    Best regards,
+    The Take a Break Team <br>
 
-    The Take a Break Team
-
-    [Website URL]`
+    ${baseURL}`
   };
 
   const info = await transporter.sendMail(mailOptions);
