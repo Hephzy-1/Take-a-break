@@ -51,7 +51,7 @@ async function registerEmail (firstName, email) {
 const resetLinkMail = async (firstName, email, token) => {
 
   const baseURL = process.env.FRONTEND;
-  const resetLink = `${baseURL}/auth/reset/${token}`;
+  const resetLink = `${baseURL}/auth/reset-password/${token}`;
 
   const mailOptions = {
     from: 'Take A Break',
