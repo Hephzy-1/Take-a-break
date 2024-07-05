@@ -48,12 +48,9 @@ async function registerEmail (firstName, email) {
   await info.response
 }
 
-const resetLinkMail = async (req, firstName, email, token) => {
-  const getBaseURL = (req) => {
-    return `${req.protocol}://${req.get('host')}`;
-  };
+const resetLinkMail = async (firstName, email, token) => {
 
-  const baseURL = getBaseURL(req);
+  const baseURL = process.env.FROTEND;
   const resetLink = `${baseURL}/auth/reset/${token}`;
 
   const mailOptions = {
